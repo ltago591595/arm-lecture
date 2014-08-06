@@ -28,10 +28,30 @@ fibonacci:
 
 	@ R0 = R5 + R0 (update flags)
 
-	pop {r3, r4, r5, pc}		@EPILOG
+	@pop {r3, r4, r5, pc}		@EPILOG
 
 	@ END CODE MODIFICATION
+    subs r4, r0, #0
+    ble .L3
+    
+    cmp r4, #1
+    beq .L4
+
+    
+    subs r0, r4, #1
+    bl fibonacci
+    
+    mov r5, r0
+    subs r0, r4, #2
+    bl fibonacci
+    
+    add r0, r5
+    pop {r3, r4, r5, pc}
+
+
+
 .L3:
+    
 	mov r0, #0			@ R0 = 0
 	pop {r3, r4, r5, pc}		@ EPILOG
 
